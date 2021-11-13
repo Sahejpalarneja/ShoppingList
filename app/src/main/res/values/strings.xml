@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">ShoppingList</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
+    <string-array name="categories">
+        <item>Food</item>
+        <item>Home</item>
+        <item>Personal</item>
+    </string-array>
 </resources>
