@@ -4,6 +4,13 @@
         android:drawable="@drawable/bg_gradient"/>
     <item>
         <bitmap android:gravity="center"
-            android:src="@mipmap/ic_shoppinglist"/>
+            android:src="@mipmap/ic_shoppinglist" />
     </item>
+    <item
+        android:width="200dp"
+        android:height="200dp"
+        android:drawable="@mipmap/ic_title"
+        android:gravity="bottom|center" />
+
+
 </layer-list>
