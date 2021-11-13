@@ -7,6 +7,10 @@ import android.os.Bundle
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.example.shoppinglist.data.Item
+import com.example.shoppinglist.databinding.ActivityMainBinding.inflate
+import com.example.shoppinglist.databinding.ItemRowBinding
+import com.example.shoppinglist.databinding.ItemRowBinding.inflate
+import com.example.shoppinglist.databinding.AddItemDialogBinding
 
 class ItemDialog :DialogFragment() {
     interface  ItemHandler{
@@ -36,7 +40,7 @@ class ItemDialog :DialogFragment() {
         val dialogBuilder = AlertDialog.Builder(requireContext())
 
         dialogBuilder.setTitle("Add Item")
-        val dialogBinding =  ItemDialogBinding.inflate(layoutInflater)
+        val dialogBinding =AddItemDialogBinding.inflate(layoutInflater)
 
         etItemName = dialogBinding.etItemDesc
         cbItemStatus = dialogBinding.cbItemStatus

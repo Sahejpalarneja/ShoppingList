@@ -4,21 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.shoppinglist.MainActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
 import com.example.shoppinglist.databinding.ItemRowBinding
-import java.text.FieldPosition
-import java.util.*
 
-class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, ListAdapter {
+class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     var items = mutableListOf<Item>()
     val context:Context
 
-    constructor(context: Context,listItems:List<Item>)
+    constructor(context: Context, listItems:List<Item>)
     {
         this.context = context
         items.addAll(listItems)
@@ -45,7 +41,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, ListAdapter {
             (context as MainActivity).showEditItemDialog(items[holder.adapterPosition],holder.adapterPosition)
         }
 
-        holder.binding.cbItemStatus.setOnClickLiistener{
+        holder.binding.cbItemStatus.setOnClickListener{
             items[holder.adapterPosition].done = holder.binding.cbItemStatus.isChecked
             Thread{
                 AppDatabase.getInstance(context).itemDao().updateItem(items[holder.adapterPosition])
@@ -57,10 +53,10 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, ListAdapter {
             holder.binding.ivIcon.setImageResource(R.mipmap.ic_foodicon)
         }
         else if(items[holder.adapterPosition].category == 1){
-            holder.binding.tvIcon.setImageResorce(R.mipmap.ic_homeicon)
+            holder.binding.ivIcon.setImageResource(R.mipmap.ic_homeicon)
         }
         else if(items[holder.adapterPosition].category == 2){
-            holder.binding.tvIcon.setImageResorce(R.mipmap.ic_personalicon)
+            holder.binding.ivIcon.setImageResource(R.mipmap.ic_personalicon)
         }
 
     }
@@ -91,7 +87,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, ListAdapter {
     inner class  ViewHolder(val binding : ItemRowBinding):RecyclerView.ViewHolder(binding.root){
 
     }
-
+/*
     override fun onDismmissed(position: Int){
         deleteItem(position)
     }
@@ -101,4 +97,6 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, ListAdapter {
         Collections.swap(items,fromPosition,toPosition)
         notifyItemMoved(fromPosition,toPosition)
     }
+
+ */
 }

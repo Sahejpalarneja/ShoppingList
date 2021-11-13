@@ -7,7 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = arrayOf(Item::class),version = 3)
-abstract class AppDatabase {
+abstract class AppDatabase:RoomDatabase(){
     abstract fun itemDao(): ItemDao
 
     companion object{
@@ -15,7 +15,7 @@ abstract class AppDatabase {
 
         fun getInstance(context: Context):AppDatabase{
             if(INSTANCE == null){
-                INSTANCE = Room.databaseBuilder(context.applicationContext(),
+                INSTANCE = Room.databaseBuilder(context.applicationContext,
                         AppDatabase::class.java,"items.db")
                     .fallbackToDestructiveMigration()
                     .build()

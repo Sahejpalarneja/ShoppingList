@@ -3,7 +3,8 @@ package com.example.shoppinglist
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ListAdapter
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.shoppinglist.adapter.ItemAdapter
 import com.example.shoppinglist.data.AppDatabase
@@ -13,7 +14,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
 
     companion object {
         const val KEY_EDIT = "KEY_EDIT"
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var itemListAdapter:  ListAdapter
+    lateinit var itemListAdapter: ItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         Thread{
             var items = AppDatabase.getInstance(this).itemDao().getAllItems()
             runOnUiThread {
-                itemListAdapter = ItemAdapter(this, itemListAdapter)
+                itemListAdapter = ItemAdapter(this, items)
                 binding.recyclerItem.adapter = itemListAdapter
 
                 val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
@@ -70,15 +71,55 @@ class MainActivity : AppCompatActivity() {
 
         return sharedPref.getBoolean(KEY_STARTED,false)
     }
+    fun showItemDialog(){
+        ItemDialog().show(supportFragmentManager,"Dialog")
+    }
     var editIndex: Int = -1
 
     public fun showEditItemDialog(itemEdit:Item,index:Int)
     {
         editIndex = index
-        val editIdemDialog:ItemDialog()
+
+        val editIdemDialog = ItemDialog()
 
         val bundle = Bundle()
         bundle.putSerializable(KEY_EDIT,itemEdit)
+        editIdemDialog.arguments = bundle
 
+        editIdemDialog.show(supportFragmentManager,"EDIT Dialog")
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_scrolling,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun itemAdded(item: Item) {
+        saveItem(item)
+    }
+    private fun saveItem(item:Item){
+        Thread{
+            item.ItemId = AppDatabase.getInstance(this).itemDao().addItem(item)
+            runOnUiThread{
+                itemListAdapter.addItem(item)
+            }
+        }.start()
+    }
+
+    override fun itemUpdated(item: Item) {
+        Thread{
+            AppDatabase.getInstance(this).itemDao().updateItem(item)
+            runOnUiThread{
+                itemListAdapter.updateItem(item,editIndex)
+            }
+        }.start()
     }
 }
