@@ -8,7 +8,8 @@ import com.example.shoppinglist.MainActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
-import com.example.shoppinglist.databinding.ItemRowBinding
+
+import com.example.shoppinglist.databinding.ItemrowBinding
 
 class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     var items = mutableListOf<Item>()
@@ -20,7 +21,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         items.addAll(listItems)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(ItemrowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +31,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val currentItem = items[position]
 
-        holder.binding.tvName.text = currentItem.name
+        holder.binding.tvName.text= currentItem.name
         holder.binding.cbItemStatus.isChecked = currentItem.done
 
         holder.binding.btnDelete.setOnClickListener{
@@ -84,7 +85,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         notifyItemChanged(editIndex)
     }
 
-    inner class  ViewHolder(val binding : ItemRowBinding):RecyclerView.ViewHolder(binding.root){
+    inner class  ViewHolder(val binding : ItemrowBinding):RecyclerView.ViewHolder(binding.root){
 
     }
 /*

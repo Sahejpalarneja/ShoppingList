@@ -1,5 +1,8 @@
 package com.example.shoppinglist.data
 import androidx.room.*
+
+
+@Dao
 interface ItemDao{
     @Query("SELECT * FROM item")
     fun getAllItems():List<Item>
