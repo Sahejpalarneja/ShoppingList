@@ -6,4 +6,11 @@
         <item>Home</item>
         <item>Personal</item>
     </string-array>
+    <string name="name_hint">Add Item Name here </string>
+    <string name="desc_hint">Add Item Description here</string>
+    <string name="price_hint">Add Expected Price here</string>
+    <string name="status">Done</string>
+    <string name="delete">Delete</string>
+    <string name = "edit">Edit</string>
+    <string name="delete_all">Delete All</string>
 </resources>

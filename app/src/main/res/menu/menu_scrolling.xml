@@ -10,6 +10,6 @@
     <item
         android:id="@+id/action_deleteall"
         android:orderInCategory="100"
-        android:title="Delete all"
+        android:title="@string/delete_all"
         app:showAsAction="always"/>
 </menu>
