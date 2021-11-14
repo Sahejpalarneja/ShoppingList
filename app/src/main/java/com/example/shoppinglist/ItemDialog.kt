@@ -12,6 +12,9 @@ import com.example.shoppinglist.databinding.ActivityMainBinding.inflate
 import com.example.shoppinglist.databinding.ItemrowBinding.inflate
 
 import com.example.shoppinglist.databinding.AdditemDialogBinding
+import java.lang.ClassCastException
+import java.lang.IllegalArgumentException
+import kotlin.reflect.typeOf
 
 class ItemDialog :DialogFragment() {
     interface  ItemHandler{
@@ -43,11 +46,14 @@ class ItemDialog :DialogFragment() {
         dialogBuilder.setTitle("Add Item")
         val dialogBinding =AdditemDialogBinding.inflate(layoutInflater)
 
-        etItemName = dialogBinding.etItemDesc
-        cbItemStatus = dialogBinding.cbItemStatus
-        spinnerCategory = dialogBinding.spinnerCategory
-        etItemDesc = dialogBinding.etItemDesc
-        etPrice = dialogBinding.etPrice
+            etItemName = dialogBinding.etItemName
+            cbItemStatus = dialogBinding.cbItemStatus
+            spinnerCategory = dialogBinding.spinnerCategory
+            etItemDesc = dialogBinding.etItemDesc
+            etPrice = dialogBinding.etPrice
+
+
+
 
         var categoryAdapter = ArrayAdapter.createFromResource(requireContext()!!, R.array.categories,android.R.layout.simple_spinner_dropdown_item)
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -63,6 +69,7 @@ class ItemDialog :DialogFragment() {
             cbItemStatus.isChecked = item.done
             etItemDesc.setText(item.desc)
             etPrice.setText(item.price.toString())
+
             dialogBuilder.setTitle("Edit Item")
         }
 
@@ -85,12 +92,31 @@ class ItemDialog :DialogFragment() {
                 val arguments = this.arguments
 
                 if (arguments != null && arguments.containsKey(MainActivity.KEY_EDIT)) {
-                    handleItemEdit()
+                    try {
+                        var price = etPrice.text.toString().toFloat()
+                        handleItemEdit(price)
+                        dialog!!.dismiss()
+                    }
+                    catch (e:NumberFormatException)
+                    {
+                        etPrice.error = "This should be a number"
+                        Toast.makeText(context,"error",Toast.LENGTH_SHORT).show()
+                    }
+
                 } else {
-                    handleItemAdd()
+                    try {
+                       var price = etPrice.text.toString().toFloat()
+                        handleItemAdd(price)
+                        dialog!!.dismiss()
+                    }
+                    catch (e:NumberFormatException)
+                    {
+                        etPrice.error = "This should be a number"
+                        Toast.makeText(context,"error",Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
-                dialog!!.dismiss()
             }
             else{
                 etItemName.error = "This field cannot be empty"
@@ -99,22 +125,24 @@ class ItemDialog :DialogFragment() {
         }
     }
 
-    private fun handleItemAdd()
+    private fun handleItemAdd(price:Float)
     {
         itemHandler.itemAdded(
             Item(null,
                 etItemName.text.toString(),
-                false,etItemDesc.text.toString(),
+                false,
+                etItemDesc.text.toString(),
                 spinnerCategory.selectedItemPosition,
-                etPrice.text.toString().toFloat())
+                price
+               )
         )
     }
-    private fun handleItemEdit(){
+    private fun handleItemEdit(price:Float){
         val itemEdit = arguments?.getSerializable(MainActivity.KEY_EDIT) as Item
         itemEdit.name = etItemName.text.toString()
         itemEdit.done = cbItemStatus.isChecked
         itemEdit.category = spinnerCategory.selectedItemPosition
-        itemEdit.price = etPrice.text.toString().toFloat()
+        itemEdit.price = price
         itemHandler.itemUpdated(itemEdit)
 
     }

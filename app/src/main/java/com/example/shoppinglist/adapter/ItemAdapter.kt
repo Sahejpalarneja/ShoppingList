@@ -10,6 +10,7 @@ import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
 
 import com.example.shoppinglist.databinding.ItemrowBinding
+import java.util.*
 
 class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     var items = mutableListOf<Item>()
@@ -33,6 +34,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
         holder.binding.tvName.text= currentItem.name
         holder.binding.cbItemStatus.isChecked = currentItem.done
+        holder.binding.tvPrice.text = currentItem.price.toString()
 
         holder.binding.btnDelete.setOnClickListener{
             deleteItem(holder.adapterPosition)
@@ -68,7 +70,9 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
             (context as MainActivity).runOnUiThread{
                 items.removeAt(position)
-                notifyItemChanged(position)
+                notifyDataSetChanged()
+                //moveItems(position)
+                notifyItemRemoved(position)
             }
         }.start()
     }
@@ -93,11 +97,15 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         deleteItem(position)
     }
 
-    override fun  onItemMoved(fromPosition: Int,toPosition:Int)
+    fun moveItems(position)
     {
+        for(item:Item in items)
+        {
+            Collections.
+        }
         Collections.swap(items,fromPosition,toPosition)
-        notifyItemMoved(fromPosition,toPosition)
-    }
 
- */
+    } */
+
+
 }
