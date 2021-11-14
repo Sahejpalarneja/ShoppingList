@@ -7,13 +7,21 @@ import android.os.Bundle
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.example.shoppinglist.data.Item
+import com.example.shoppinglist.data.MoneyResult
 import com.example.shoppinglist.databinding.ActivityMainBinding.inflate
 
 import com.example.shoppinglist.databinding.ItemrowBinding.inflate
 
 import com.example.shoppinglist.databinding.AdditemDialogBinding
+import com.example.shoppinglist.network.MoneyAPI
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.ClassCastException
 import java.lang.IllegalArgumentException
+import java.nio.file.attribute.UserDefinedFileAttributeView
 import kotlin.reflect.typeOf
 
 class ItemDialog :DialogFragment() {
@@ -127,24 +135,58 @@ class ItemDialog :DialogFragment() {
 
     private fun handleItemAdd(price:Float)
     {
+        val currencies = getCurrencies()
         itemHandler.itemAdded(
             Item(null,
                 etItemName.text.toString(),
                 false,
                 etItemDesc.text.toString(),
                 spinnerCategory.selectedItemPosition,
-                price
+                price,
+                currencies
                )
         )
     }
     private fun handleItemEdit(price:Float){
+        val currencies = getCurrencies()
         val itemEdit = arguments?.getSerializable(MainActivity.KEY_EDIT) as Item
         itemEdit.name = etItemName.text.toString()
         itemEdit.done = cbItemStatus.isChecked
         itemEdit.category = spinnerCategory.selectedItemPosition
         itemEdit.price = price
+        itemEdit.currencies = currencies
         itemHandler.itemUpdated(itemEdit)
 
+    }
+
+    private fun getCurrencies() :List<Float>
+    {
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.frankfurter.app")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val currencyAPI = retrofit.create(MoneyAPI::class.java)
+
+        val moneyCall  = currencyAPI.getMoney("HUF")
+        var USD:Float? = null
+        var INR:Float? =null
+        var RUB:Float? = null
+        moneyCall.enqueue(object:Callback<MoneyResult>{
+            override fun onFailure(call:Call<MoneyResult>,t:Throwable){
+                Toast.makeText(context,t.message.toString(),Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<MoneyResult>, response: Response<MoneyResult>) {
+                var moneyResult = response.body()
+                USD = moneyResult?.rates?.USD?.toFloat()
+                INR = moneyResult?.rates?.INR?.toFloat()
+                RUB = moneyResult?.rates?.RUB?.toFloat()
+            }
+
+        })
+        return  listOf(USD!!,INR!!,RUB!!)
     }
 
 }
