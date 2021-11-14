@@ -19,8 +19,7 @@ class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
 
     companion object {
         const val KEY_EDIT = "KEY_EDIT"
-
-        const val PREF_NAME = "PREFTODO"
+        const val PREF_NAME = "PREFITEM"
         const val KEY_STARTED = "KEY_STARTED"
         const val KEY_LAST_USED = "KEY_LAST_USED"
     }

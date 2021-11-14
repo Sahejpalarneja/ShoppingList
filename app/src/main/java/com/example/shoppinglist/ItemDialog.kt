@@ -43,11 +43,14 @@ class ItemDialog :DialogFragment() {
         dialogBuilder.setTitle("Add Item")
         val dialogBinding =AdditemDialogBinding.inflate(layoutInflater)
 
-        etItemName = dialogBinding.etItemDesc
-        cbItemStatus = dialogBinding.cbItemStatus
-        spinnerCategory = dialogBinding.spinnerCategory
-        etItemDesc = dialogBinding.etItemDesc
-        etPrice = dialogBinding.etPrice
+            etItemName = dialogBinding.etItemName
+            cbItemStatus = dialogBinding.cbItemStatus
+            spinnerCategory = dialogBinding.spinnerCategory
+            etItemDesc = dialogBinding.etItemDesc
+            etPrice = dialogBinding.etPrice
+
+
+
 
         var categoryAdapter = ArrayAdapter.createFromResource(requireContext()!!, R.array.categories,android.R.layout.simple_spinner_dropdown_item)
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
