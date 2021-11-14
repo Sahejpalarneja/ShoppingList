@@ -6,24 +6,24 @@
 
     <EditText
         android:id="@+id/etItemName"
-        android:hint="Add Item Name here"
+        android:hint="@string/name_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
         android:id="@+id/etItemDesc"
-        android:hint="Add Item Description here"
+        android:hint="@string/desc_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
         android:id="@+id/etPrice"
-        android:hint="Add Expected Price here"
+        android:hint="@string/price_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <CheckBox
         android:id="@+id/cbItemStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Done"/>
+        android:text="@string/status"/>
 
     <Spinner
         android:id="@+id/spinnerCategory"

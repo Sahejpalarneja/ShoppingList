@@ -15,4 +15,7 @@ interface ItemDao{
 
     @Update
     fun updateItem(item: Item)
+
+    @Query("DELETE FROM item")
+    fun deleteall()
 }

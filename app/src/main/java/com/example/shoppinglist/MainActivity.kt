@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ListAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.shoppinglist.adapter.ItemAdapter
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
+import com.example.shoppinglist.data.ItemDao
 import com.example.shoppinglist.databinding.ActivityMainBinding
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import java.util.*
@@ -96,8 +98,10 @@ class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+       return when(item.itemId){
             R.id.action_settings -> true
+            R.id.action_deleteall -> deleteall()
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -122,4 +126,14 @@ class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
             }
         }.start()
     }
+
+    private fun deleteall() :Boolean
+    {
+        for(i in 0 until itemListAdapter.itemCount)
+        {
+            itemListAdapter.deleteall()
+        }
+        return true
+    }
+
 }

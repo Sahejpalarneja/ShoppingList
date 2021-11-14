@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import com.example.shoppinglist.MainActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.data.AppDatabase
@@ -71,7 +72,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
             (context as MainActivity).runOnUiThread{
                 items.removeAt(position)
                 notifyDataSetChanged()
-                //moveItems(position)
+                //moveItems(position)s
                 notifyItemRemoved(position)
             }
         }.start()
@@ -90,6 +91,22 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     }
 
     inner class  ViewHolder(val binding : ItemrowBinding):RecyclerView.ViewHolder(binding.root){
+
+    }
+    public fun deleteall()
+    {
+        Thread{
+            AppDatabase.getInstance(context).itemDao().deleteall()
+            (context as MainActivity).runOnUiThread{
+                for(i in 0 until itemCount)
+                {
+                    items.removeAt(0)
+
+                }
+                notifyDataSetChanged()
+            }
+
+        }.start()
 
     }
 /*
