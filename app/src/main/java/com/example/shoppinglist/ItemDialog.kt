@@ -19,10 +19,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.ClassCastException
-import java.lang.IllegalArgumentException
-import java.nio.file.attribute.UserDefinedFileAttributeView
-import kotlin.reflect.typeOf
 
 class ItemDialog :DialogFragment() {
     interface  ItemHandler{
