@@ -20,18 +20,18 @@ class DetailsActivity: AppCompatActivity()
         super.onCreate(savedInstanceState)
         binding = ShoppingItemDetailsBinding.inflate(layoutInflater)
         binding.tvName.text =intent.getStringExtra("Name")
-        binding.tvDesc.text = intent.getStringExtra("Desc")
-        binding.tvPrice.text =intent.getFloatExtra("Price",1.0f).toString()
-        binding.tvINRPrice.text = intent.getFloatExtra("INR",1.0f).toString()
-        binding.tvUSDPrice.text = intent.getFloatExtra("USD",1.0f).toString()
-        binding.tvRUBPrice.text = intent.getFloatExtra("RUB",1.0f).toString()
+        binding.tvDesc.text = "Description:\n\n"+intent.getStringExtra("Desc")
+        binding.tvPrice.text ="Price in HUF: : "+intent.getFloatExtra("Price",1.0f).toString()
+        binding.tvINRPrice.text = "Price in INR: "+intent.getFloatExtra("INR",1.0f).toString()
+        binding.tvUSDPrice.text = "Price in USD: "+intent.getFloatExtra("USD",1.0f).toString()
+        binding.tvRUBPrice.text = "Price in RUB: "+intent.getFloatExtra("RUB",1.0f).toString()
         if(intent.getBooleanExtra("Status",false))
         {
-            binding.tvStatus.text = "Bought"
+            binding.tvStatus.text = "@string/Status"
         }
         else
         {
-            binding.tvStatus.text = "To Buy"
+            binding.tvStatus.text = "Status: To Buy"
         }
         if(intent.getIntExtra("Image",0) == 0)
         {

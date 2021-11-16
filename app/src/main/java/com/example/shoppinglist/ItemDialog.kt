@@ -140,9 +140,9 @@ class ItemDialog :DialogFragment() {
                 etItemDesc.text.toString(),
                 spinnerCategory.selectedItemPosition,
                 price,
-                currencies[0],
-                currencies[1],
-                currencies[2]
+                currencies[0].times(price),
+                currencies[1].times(price),
+                currencies[2].times(price)
                )
         )
     }
@@ -150,12 +150,13 @@ class ItemDialog :DialogFragment() {
         val currencies = getCurrencies()
         val itemEdit = arguments?.getSerializable(MainActivity.KEY_EDIT) as Item
         itemEdit.name = etItemName.text.toString()
+        itemEdit.desc = etItemDesc.text.toString()
         itemEdit.done = cbItemStatus.isChecked
         itemEdit.category = spinnerCategory.selectedItemPosition
         itemEdit.price = price
-        itemEdit.USD = currencies[0]
-        itemEdit.INR = currencies[1]
-        itemEdit.RUB = currencies[2]
+        itemEdit.USD = currencies[0].times(price)
+        itemEdit.INR = currencies[1].times(price)
+        itemEdit.RUB = currencies[2].times(price)
         itemHandler.itemUpdated(itemEdit)
 
     }
