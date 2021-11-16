@@ -27,7 +27,7 @@ class DetailsActivity: AppCompatActivity()
         binding.tvRUBPrice.text = "Price in RUB: "+intent.getFloatExtra("RUB",1.0f).toString()
         if(intent.getBooleanExtra("Status",false))
         {
-            binding.tvStatus.text = "@string/Status"
+            binding.tvStatus.text = "Status: Bought"
         }
         else
         {
