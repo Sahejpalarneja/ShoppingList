@@ -12,5 +12,8 @@ data class Item(
     @ColumnInfo(name = "description") var desc: String?,
     @ColumnInfo(name = "category") var category: Int,
     @ColumnInfo(name = "price") var price: Float?,
-    @ColumnInfo(name = "currencies") var currencies: List<Float>
+    @ColumnInfo(name = "USD") var USD:Float,
+    @ColumnInfo(name = "INR") var INR:Float,
+    @ColumnInfo(name = "RUB") var RUB:Float
+
 ) :Serializable

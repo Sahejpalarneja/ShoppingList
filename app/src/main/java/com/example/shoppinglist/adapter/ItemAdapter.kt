@@ -1,10 +1,14 @@
 package com.example.shoppinglist.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+
+import com.example.shoppinglist.DetailsActivity
 import com.example.shoppinglist.MainActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.data.AppDatabase
@@ -40,6 +44,9 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         holder.binding.btnDelete.setOnClickListener{
             deleteItem(holder.adapterPosition)
         }
+        holder.binding.btnDetails.setOnClickListener {
+            (context as MainActivity).detailsclicked(position)
+        }
 
         holder.binding.btnEdit.setOnClickListener{
             (context as MainActivity).showEditItemDialog(items[holder.adapterPosition],holder.adapterPosition)
@@ -64,7 +71,10 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         }
 
     }
-
+    fun get(position: Int):Item
+    {
+        return items[position]
+    }
     private fun  deleteItem(position: Int){
         Thread{
             AppDatabase.getInstance(context).itemDao().deleteItem(items.get(position))

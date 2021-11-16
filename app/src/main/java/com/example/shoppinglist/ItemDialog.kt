@@ -19,6 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.NullPointerException
 
 class ItemDialog :DialogFragment() {
     interface  ItemHandler{
@@ -139,7 +140,9 @@ class ItemDialog :DialogFragment() {
                 etItemDesc.text.toString(),
                 spinnerCategory.selectedItemPosition,
                 price,
-                currencies
+                currencies[0],
+                currencies[1],
+                currencies[2]
                )
         )
     }
@@ -150,7 +153,9 @@ class ItemDialog :DialogFragment() {
         itemEdit.done = cbItemStatus.isChecked
         itemEdit.category = spinnerCategory.selectedItemPosition
         itemEdit.price = price
-        itemEdit.currencies = currencies
+        itemEdit.USD = currencies[0]
+        itemEdit.INR = currencies[1]
+        itemEdit.RUB = currencies[2]
         itemHandler.itemUpdated(itemEdit)
 
     }
@@ -175,14 +180,23 @@ class ItemDialog :DialogFragment() {
             }
 
             override fun onResponse(call: Call<MoneyResult>, response: Response<MoneyResult>) {
+
                 var moneyResult = response.body()
+
                 USD = moneyResult?.rates?.USD?.toFloat()
                 INR = moneyResult?.rates?.INR?.toFloat()
                 RUB = moneyResult?.rates?.RUB?.toFloat()
             }
 
         })
-        return  listOf(USD!!,INR!!,RUB!!)
+        try {
+            return  listOf(USD!!,INR!!,RUB!!)
+        }
+        catch (e:NullPointerException)
+        {
+            return listOf(1.0f,1.0f,1.0f)
+        }
+
     }
 
 }

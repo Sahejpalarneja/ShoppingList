@@ -1,34 +1,31 @@
 package com.example.shoppinglist
 
-import android.app.Activity
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.content.Context
+
 import android.content.Intent
-import androidx.core.content.ContentProviderCompat.requireContext
 
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
-import com.example.shoppinglist.databinding.ActivityMainBinding
+
+
 import com.example.shoppinglist.databinding.ShoppingItemDetailsBinding
 
-class DetailsActivity(val position:Int): AppCompatActivity()
+class DetailsActivity: AppCompatActivity()
 {
 
     private lateinit var binding: ShoppingItemDetailsBinding
-    private val items = AppDatabase.getInstance(context = MainActivity()).itemDao().getAllItems()
-    private val selectedItem = items[position]
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         binding = ShoppingItemDetailsBinding.inflate(layoutInflater)
-        binding.tvName.text = selectedItem.name
-        binding.tvDesc.text = selectedItem.desc
-        binding.tvPrice.text = selectedItem.price.toString()
-        binding.tvINRPrice.text = selectedItem.currencies[1].toString()
-        binding.tvUSDPrice.text = selectedItem.currencies[0].toString()
-        binding.tvRUBPrice.text = selectedItem.currencies[2].toString()
-        if(selectedItem.done)
+        binding.tvName.text =intent.getStringExtra("Name")
+        binding.tvDesc.text = intent.getStringExtra("Desc")
+        binding.tvPrice.text =intent.getFloatExtra("Price",1.0f).toString()
+        binding.tvINRPrice.text = intent.getFloatExtra("INR",1.0f).toString()
+        binding.tvUSDPrice.text = intent.getFloatExtra("USD",1.0f).toString()
+        binding.tvRUBPrice.text = intent.getFloatExtra("RUB",1.0f).toString()
+        if(intent.getBooleanExtra("Status",false))
         {
             binding.tvStatus.text = "Bought"
         }
@@ -36,15 +33,15 @@ class DetailsActivity(val position:Int): AppCompatActivity()
         {
             binding.tvStatus.text = "To Buy"
         }
-        if(selectedItem.category == 0)
+        if(intent.getIntExtra("Image",0) == 0)
         {
             binding.icCategory.setImageResource(R.mipmap.ic_foodicon)
         }
-        else if(selectedItem.category == 1)
+        else if(intent.getIntExtra("Image",0) == 1)
         {
             binding.icCategory.setImageResource(R.mipmap.ic_homeicon)
         }
-        else if(selectedItem.category == 2)
+        else if(intent.getIntExtra("Image",0) == 2)
         {
             binding.icCategory.setImageResource(R.mipmap.ic_personalicon)
         }
@@ -55,5 +52,6 @@ class DetailsActivity(val position:Int): AppCompatActivity()
             startActivity(mainIntent)
         }
     }
+
 
 }

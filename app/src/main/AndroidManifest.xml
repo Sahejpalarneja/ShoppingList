@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shoppinglist">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:fullBackupOnly="true"
@@ -10,6 +11,7 @@
         android:roundIcon="@mipmap/ic_shoppinglist"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingList">
+        <activity android:name=".DetailsActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -30,6 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>
