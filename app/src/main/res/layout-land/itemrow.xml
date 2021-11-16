@@ -23,7 +23,6 @@
             android:padding="5dp">
 
             <ImageView
-                android:contentDescription="Category icon"
                 android:id="@+id/ivIcon"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
@@ -46,17 +45,23 @@
 
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/tvPrice"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:padding="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDesc"
                 android:textSize="20sp"
                 android:textColor="@color/black"/>
         </LinearLayout>
