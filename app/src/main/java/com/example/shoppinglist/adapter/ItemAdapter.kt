@@ -13,17 +13,15 @@ import com.example.shoppinglist.MainActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
-
 import com.example.shoppinglist.databinding.ItemrowBinding
+
 import java.util.*
 
-class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
+class ItemAdapter(val context: Context, listItems: List<Item>) :
+    RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
     var items = mutableListOf<Item>()
-    val context:Context
 
-    constructor(context: Context, listItems:List<Item>)
-    {
-        this.context = context
+    init {
         items.addAll(listItems)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,6 +38,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         holder.binding.tvName.text= currentItem.name
         holder.binding.cbItemStatus.isChecked = currentItem.done
         holder.binding.tvPrice.text = currentItem.price.toString()
+        holder.binding.tvDesc?.text = currentItem.desc
 
         holder.binding.btnDelete.setOnClickListener{
             deleteItem(holder.adapterPosition)
@@ -81,29 +80,30 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
             (context as MainActivity).runOnUiThread{
                 items.removeAt(position)
-                notifyDataSetChanged()
+
                 //moveItems(position)s
                 notifyItemRemoved(position)
             }
         }.start()
     }
 
-    public fun addItem(item: Item)
+    fun addItem(item: Item)
     {
         items.add(item)
         notifyItemInserted(items.lastIndex)
     }
 
-    public fun updateItem(item: Item,editIndex:Int)
+     fun updateItem(item: Item,editIndex:Int)
     {
         items.set(editIndex,item)
         notifyItemChanged(editIndex)
     }
 
+
     inner class  ViewHolder(val binding : ItemrowBinding):RecyclerView.ViewHolder(binding.root){
 
     }
-    public fun deleteall()
+    fun deleteall()
     {
         Thread{
             AppDatabase.getInstance(context).itemDao().deleteall()

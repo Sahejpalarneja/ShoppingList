@@ -10,6 +10,7 @@ import com.example.shoppinglist.data.Item
 
 
 import com.example.shoppinglist.databinding.ShoppingItemDetailsBinding
+import com.romainpiel.shimmer.Shimmer
 
 class DetailsActivity: AppCompatActivity()
 {
@@ -45,9 +46,18 @@ class DetailsActivity: AppCompatActivity()
         {
             binding.icCategory.setImageResource(R.mipmap.ic_personalicon)
         }
+        val shimmer = Shimmer()
+        shimmer.start(binding.tvDesc)
+        shimmer.start(binding.tvName)
+        shimmer.start(binding.tvPrice)
+        shimmer.start(binding.tvStatus)
+        shimmer.start(binding.tvINRPrice)
+        shimmer.start(binding.tvUSDPrice)
+        shimmer.start(binding.tvRUBPrice)
+
         setContentView(binding.root)
         binding.btnOK.setOnClickListener {
-             var mainIntent = Intent()
+             val mainIntent = Intent()
             mainIntent.setClass(this,MainActivity::class.java)
             startActivity(mainIntent)
         }
