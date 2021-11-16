@@ -2,6 +2,7 @@ package com.example.shoppinglist
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
             }
         }.start()
         saveStartInfo()
+
     }
     fun saveStartInfo(){
         var sharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -78,6 +80,21 @@ class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
     }
     var editIndex: Int = -1
 
+     fun detailsclicked(position:Int)
+    {
+        var detailsIntent = Intent()
+        detailsIntent.setClass(this,DetailsActivity::class.java)
+        detailsIntent.putExtra("Name",itemListAdapter.get(position).name)
+        detailsIntent.putExtra("Price",itemListAdapter.get(position).price)
+        detailsIntent.putExtra("Desc",itemListAdapter.get(position).desc)
+        detailsIntent.putExtra("Image",itemListAdapter.get(position).category)
+        detailsIntent.putExtra("USD",itemListAdapter.get(position).USD)
+        detailsIntent.putExtra("INR",itemListAdapter.get(position).INR)
+        detailsIntent.putExtra("RUB",itemListAdapter.get(position).RUB)
+        detailsIntent.putExtra("Status",itemListAdapter.get(position).done)
+
+        startActivity(detailsIntent)
+    }
     public fun showEditItemDialog(itemEdit:Item,index:Int)
     {
         editIndex = index
