@@ -177,14 +177,14 @@ class ItemDialog :DialogFragment() {
         var RUB:Float? = null
         moneyCall.enqueue(object:Callback<MoneyResult>{
             override fun onFailure(call:Call<MoneyResult>,t:Throwable){
-                Toast.makeText(context,t.message.toString(),Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context,t.message.toString(),Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<MoneyResult>, response: Response<MoneyResult>) {
 
                 var moneyResult = response.body()
 
-                USD = moneyResult?.rates?.USD?.toFloat()
+                USD = moneyResult!!.rates!!.USD!!.toFloat()
                 INR = moneyResult?.rates?.INR?.toFloat()
                 RUB = moneyResult?.rates?.RUB?.toFloat()
             }
