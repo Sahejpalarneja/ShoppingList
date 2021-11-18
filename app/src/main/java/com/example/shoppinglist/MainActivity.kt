@@ -3,6 +3,7 @@ package com.example.shoppinglist
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -37,6 +38,10 @@ class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
         setContentView(binding.root)
 
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        binding.toolbar.setTitleTextColor(Color.BLACK)
+        binding.toolbarLayout.setExpandedTitleColor(Color.BLACK)
+        binding.toolbarLayout.setCollapsedTitleTextColor(Color.BLACK)
         binding.toolbarLayout.title= title
         binding.fab.setOnClickListener {
             view->showItemDialog()
