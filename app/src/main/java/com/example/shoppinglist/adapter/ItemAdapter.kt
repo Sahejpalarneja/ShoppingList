@@ -11,11 +11,14 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
 import com.example.shoppinglist.databinding.ItemrowBinding
+import java.util.*
+import com.example.shoppinglist.touch.ItemTouchHelperCallback
 
 
-class ItemAdapter(private val context: Context, listItems: List<Item>) :
-    RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+class ItemAdapter(private val context: Context, listItems: List<Item>):RecyclerView.Adapter<ItemAdapter.ViewHolder>(),ItemTouchHelperCallback
+{
     private var items = mutableListOf<Item>()
+
 
     init {
         items.addAll(listItems)
@@ -115,20 +118,14 @@ class ItemAdapter(private val context: Context, listItems: List<Item>) :
         }.start()
 
     }
-/*
-    override fun onDismmissed(position: Int){
+
+    override fun onDismissed(position: Int) {
         deleteItem(position)
     }
-
-    fun moveItems(position)
-    {
-        for(item:Item in items)
-        {
-            Collections.
-        }
-        Collections.swap(items,fromPosition,toPosition)
-
-    } */
+    override fun onItemMoved(fromPosition: Int, toPosition: Int) {
+        Collections.swap(items, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
+    }
 
 
 }

@@ -9,11 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.shoppinglist.adapter.ItemAdapter
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
 
 import com.example.shoppinglist.databinding.ActivityMainBinding
+import com.example.shoppinglist.touch.ItemRecyclerTouchCallback
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import java.util.*
 
@@ -61,6 +63,9 @@ class MainActivity : AppCompatActivity(),ItemDialog.ItemHandler{
                 val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
                 binding.recyclerItem.addItemDecoration(itemDecoration)
 
+                val touchCallbackList = ItemRecyclerTouchCallback(itemListAdapter)
+                val itemTouchHelper = ItemTouchHelper(touchCallbackList)
+                itemTouchHelper.attachToRecyclerView(binding.recyclerItem)
             }
         }.start()
         saveStartInfo()
