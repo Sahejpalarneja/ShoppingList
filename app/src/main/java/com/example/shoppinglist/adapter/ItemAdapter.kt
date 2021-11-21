@@ -1,25 +1,21 @@
 package com.example.shoppinglist.adapter
 
 import android.content.Context
-import android.content.Intent
+
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 
-import com.example.shoppinglist.DetailsActivity
 import com.example.shoppinglist.MainActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.data.AppDatabase
 import com.example.shoppinglist.data.Item
 import com.example.shoppinglist.databinding.ItemrowBinding
 
-import java.util.*
 
-class ItemAdapter(val context: Context, listItems: List<Item>) :
+class ItemAdapter(private val context: Context, listItems: List<Item>) :
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
-    var items = mutableListOf<Item>()
+    private var items = mutableListOf<Item>()
 
     init {
         items.addAll(listItems)
@@ -76,7 +72,7 @@ class ItemAdapter(val context: Context, listItems: List<Item>) :
     }
     private fun  deleteItem(position: Int){
         Thread{
-            AppDatabase.getInstance(context).itemDao().deleteItem(items.get(position))
+            AppDatabase.getInstance(context).itemDao().deleteItem(items[position])
 
             (context as MainActivity).runOnUiThread{
                 items.removeAt(position)
@@ -95,7 +91,7 @@ class ItemAdapter(val context: Context, listItems: List<Item>) :
 
      fun updateItem(item: Item,editIndex:Int)
     {
-        items.set(editIndex,item)
+        items[editIndex] = item
         notifyItemChanged(editIndex)
     }
 

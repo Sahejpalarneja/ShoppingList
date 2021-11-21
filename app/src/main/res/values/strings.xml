@@ -15,4 +15,12 @@
     <string name="delete_all">Delete All</string>
     <string name="ok">OK</string>
     <string name="details">Details</string>
+    <string name="PriceH">Price in HUF: %1$s</string>
+    <string name="PriceU">Price in USD: %1$s</string>
+    <string name="PriceI">Price in INR: %1$s</string>
+    <string name="PriceR">Price in RUB: %1$s</string>
+    <string name="Description">Description:\n\n %1$s</string>
+    <string name="StatusTrue">Status: Bought</string>
+    <string name="StatusFalse">Status: To Buy</string>
+
 </resources>
